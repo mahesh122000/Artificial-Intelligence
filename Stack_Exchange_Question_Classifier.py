@@ -1,5 +1,5 @@
 import json
-from sklearn.svm import LinearSVC #randomForestClassifier
+from sklearn.svm import LinearSVC 
 from sklearn.feature_extraction.text import HashingVectorizer
 hv=HashingVectorizer(stop_words='english')
 svm=LinearSVC()
@@ -19,4 +19,4 @@ for i in range(int(input())):
     test_data.append(test['question']+"\r\n"+test['excerpt'])
 test_data = hv.transform(test_data)
 test_label=svm.predict(test_data)
-for e in test_label: print(e)ge
+for e in test_label: print(e)
