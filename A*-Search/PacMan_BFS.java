@@ -1,8 +1,6 @@
 import java.io.*;
 import java.util.*;
 
-
-
 public class Solution {
     static class Node {
         int r;
@@ -15,42 +13,42 @@ public class Solution {
             this.ancestor = n;
         }
     }
-    static void dfs(int i,int j,int n,int m,String s[])
+
+    public static void bfs(String s[],int i,int j,int n,int m)
     {
-        int b[][]=new int[n][m];
-        Stack<Node> st = new Stack();
+        Queue<Node>q=new LinkedList<>();
+        ArrayList<Node>explored=new ArrayList<>();
         Stack<Node> path = new Stack();
-        ArrayList<Node> explored = new ArrayList<Node>();
-        Node goal = null;
-        Node init = new Node(i,j, null);
-        st.push(init);   
-        while(!st.isEmpty())
-        {Node t=st.pop();
-         b[t.r][t.c]=1;
+        q.add(new Node(i,j,null));
+        Node goal=null;
+        int b[][]=new int[n][m];
+        while(!q.isEmpty())
+        {Node t=q.poll();
          explored.add(t);
-         if(s[t.r].charAt(t.c)=='.')
-         {goal=t;
-         break;}
-         if(t.r-1 >= 0 && b[t.r-1][t.c]==0 && s[t.r-1].charAt(t.c) != '%') {
+         b[t.r][t.c]=1;
+        if(s[t.r].charAt(t.c)=='.')
+        {goal=t;
+        break;}
+        if(t.r-1 >= 0 && b[t.r-1][t.c]==0 && s[t.r-1].charAt(t.c) != '%') {
                 Node newNode = new Node(t.r-1, t.c, t);
                 b[t.r-1][t.c] = 1;
-                st.push(newNode);                
+                q.add(newNode);                
             }
          if(t.c-1 >= 0 && b[t.r][t.c-1]==0 && s[t.r].charAt(t.c-1) != '%') {
                 Node newNode = new Node(t.r, t.c-1, t);
                 b[t.r][t.c-1] = 1;
-                st.push(newNode);                
+                q.add(newNode);                 
             }
           
         if(t.c+1 <m && b[t.r][t.c+1]==0 && s[t.r].charAt(t.c+1) != '%') {
                 Node newNode = new Node(t.r, t.c+1, t);
                 b[t.r][t.c+1] = 1;
-                st.push(newNode);                
+                q.add(newNode);                  
             }
          if(t.r+1 <n && b[t.r+1][t.c]==0 && s[t.r+1].charAt(t.c) != '%') {
                 Node newNode = new Node(t.r+1, t.c, t);
                 b[t.r+1][t.c] = 1;
-                st.push(newNode);                
+                q.add(newNode);                 
             }
         }
         Node t = goal;
@@ -71,7 +69,7 @@ public class Solution {
     }
 
     public static void main(String[] args) {
-       Scanner sc=new Scanner(System.in);
+        Scanner sc=new Scanner(System.in);
         int p=sc.nextInt();
         int q=sc.nextInt();
         int r=sc.nextInt();
@@ -79,8 +77,8 @@ public class Solution {
         int n=sc.nextInt();
         int m=sc.nextInt();
         String a[]=new String[n];
-            for(int i=0;i<n;i++)
-            {a[i]=sc.next();}
-        dfs(p,q,n,m,a);
+        for(int i=0;i<n;i++)
+            a[i]=sc.next();
+        bfs(a,p,q,n,m);
     }
 }
